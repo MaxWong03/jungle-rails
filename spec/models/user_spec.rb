@@ -62,13 +62,23 @@ RSpec.describe User, type: :model do
 
     describe '.authenticate_with_credentials' do
       it 'returns user if succesfully authenticated' do
-        user = SessionsController.authenticate_with_credentials('bones@gamil.com', '888')
+        user = User.authenticate_with_credentials('bones@gamil.com', '888')
         expect(subject).eql? user
       end
 
       it 'returns nil if not successfully authenticated' do
-        user = SessionsController.authenticate_with_credentials('bones@gamil.com', 'ggg')
-        expect(subject).eql? nil
+        user = User.authenticate_with_credentials('bones@gamil.com', 'ggg')
+        expect(user).eql? nil
+      end
+
+      it 'authenticates and users if user type white space before / after email' do
+        user = User.authenticate_with_credentials(' bones@gamil.com ', '888')
+        expect(subject).eql? user
+      end
+
+      it 'authenticates and users if users type lower and upper case in email' do
+        user = User.authenticate_with_credentials('boNes@gAmil.com', '888')
+        expect(subject).eql? user
       end
     end
     
