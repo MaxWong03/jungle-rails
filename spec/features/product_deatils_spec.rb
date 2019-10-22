@@ -26,6 +26,6 @@ RSpec.feature "Visitor navigates to product detail pages from home page by click
       save_screenshot
   
       # VERIFY
-      expect(page).to have_content 'Quantity'
+    expect(page).to have_content 'Quantity'
     end
 end
