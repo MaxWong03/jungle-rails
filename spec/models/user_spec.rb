@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  subject {described_class.new(:first_name => 'Jon', :last_name => 'Jones', :email => 'bones@gamil.com', :password => "888", :password_confirmation => "888", :password_digest => "123")}
+  subject {described_class.new(:first_name => 'Jon', :last_name => 'Jones', :email => 'bones@gamil.com', :password => "888", :password_confirmation => "888")}
 
   describe 'Validations do' do
     
@@ -62,23 +62,27 @@ RSpec.describe User, type: :model do
 
     describe '.authenticate_with_credentials' do
       it 'returns user if succesfully authenticated' do
+        subject.save
         user = User.authenticate_with_credentials('bones@gamil.com', '888')
-        expect(subject).eql? user
+        expect(subject).to be == user
       end
 
       it 'returns nil if not successfully authenticated' do
+        subject.save
         user = User.authenticate_with_credentials('bones@gamil.com', 'ggg')
-        expect(user).eql? nil
+        expect(user).to be == nil
       end
 
       it 'authenticates and users if user type white space before / after email' do
+        subject.save
         user = User.authenticate_with_credentials(' bones@gamil.com ', '888')
-        expect(subject).eql? user
+        expect(subject).to be == user
       end
 
       it 'authenticates and users if users type lower and upper case in email' do
+        subject.save
         user = User.authenticate_with_credentials('boNes@gAmil.com', '888')
-        expect(subject).eql? user
+        expect(subject).to be == user
       end
     end
     
